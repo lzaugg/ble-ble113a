@@ -419,7 +419,7 @@ BluetoothController.prototype.getPeripheralFromData = function(rssi, data, addre
 BluetoothController.prototype.connect = function(peripheral, callback) {
   this.messenger.connect(peripheral.address.toBuffer(), peripheral.addressType, function(err, response) {
     function connectCallback(connectedPeripheral) {
-      if (peripheral === connectedPeripheral) {
+      if (peripheral.address.toBuffer().equals(connectedPeripheral.address.toBuffer())) {
         // Remove this listener
         self.removeListener('connect', connectCallback);
         // Call the callback
