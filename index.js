@@ -19,12 +19,26 @@ var profile = require('./lib/profile.json');
 var events = require('events');
 var util = require('util');
 var async = require('async');
+var extend = require('extend');
 
 // Instantiate a Bluetooth Controller object. Controls all BLE Central and Peripheral methods (depending on role).
-function BluetoothController(hardware, callback) {
-  this.hardware = hardware;
+function BluetoothController(hardware, options, callback) {
+  if (typeof options === 'function') {
+    callback = options;
+  }
+
+  var params = {};
+  if (typeof options === 'object') {
+    extend(params, options, {hardware: hardware});
+  } else if (typeof hardware === 'string' || typeof hardware === 'object') {
+    extend(params, {hardware: hardware});
+  } else {
+    extend(params, hardware);
+  }
+  this.messenger = new Messenger(params.hardware, params);
+  
   this.isAdvertising = false;
-  this.messenger = new Messenger(hardware);
+  
   this._connectedPeripherals = {};
 
   this.profile = profile;
@@ -2160,8 +2174,8 @@ BluetoothController.prototype.enableMITMProtection = function(enable, callback) 
 };
 
 // Set the module port of the Bluetooth Low Energy module to initialize
-function use(hardware, callback) {
-  var controller = new BluetoothController(hardware, callback);
+function use(hardware, options, callback) {
+  var controller = new BluetoothController(hardware, options, callback);
   return controller;
 }
 

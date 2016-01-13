@@ -10,7 +10,6 @@
     "type": "git",
     "url": "git@github.com:tessel/ble-ble113a.git"
   },
-
   "author": "Jon McKay <jon@technical.io>",
   "license": "MIT",
   "readmeFilename": "README.md",
@@ -24,15 +23,15 @@
     "ble113"
   ],
   "dependencies": {
-    "bglib" : "^0.0.6",
-    "async" : "^0.9.0"
+    "async": "^0.9.0",
+    "bglib": "^0.0.6",
+    "extend": "^3.0.0"
   },
   "devDependencies": {
     "tinytap": "~0.2.0"
   },
-  "hardware" :
-  {
-    "./firmware_update/update-lib/v1.0.2.hex" : false,
-    "./examples" : false
+  "hardware": {
+    "./firmware_update/update-lib/v1.0.2.hex": false,
+    "./examples": false
   }
 }
